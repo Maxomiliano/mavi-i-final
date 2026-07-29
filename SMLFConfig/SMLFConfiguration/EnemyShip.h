@@ -1,9 +1,9 @@
 #pragma once
-#include "Character.h"
-class Enemy : public Character
+#include "Ship.h"
+class EnemyShip : public Ship
 {
 public:
-	Enemy();
+	EnemyShip();
 	void Shoot();
 	void setTexture(const sf::Texture& texture);
 private:

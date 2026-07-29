@@ -1,6 +1,6 @@
 #include "GameController.h"
-#include "Character.h"
-#include "Enemy.h"
+#include "Ship.h"
+#include "EnemyShip.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -83,7 +83,7 @@ GameController::GameController() :
 		if (state == State::Play)
 		{
 			float time = clock.restart().asSeconds();
-			SpawnCharacters();
+			SpawnShips();
 		}
 		/*
 		if ()
@@ -215,7 +215,7 @@ GameController::GameController() :
 		window.draw(backToMenuButton);
 	}
 
-	void GameController::SpawnCharacters()
+	void GameController::SpawnShips()
 	{
 		
 	}

@@ -3,15 +3,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 using namespace sf;
-class Character
+
+class Ship
 {
-public: Character();
-	  enum class CharacterType
+public: Ship();
+	  enum class ShipType
 	  {
-		  Enemy,
+		  EnemyShip,
 		  Innocent
 	  };
-	  virtual ~Character();
+	  virtual ~Ship();
 	  virtual void Spawn(Vector2f& position);
 	  virtual void Draw(RenderWindow& window);
 
@@ -19,10 +20,10 @@ public: Character();
 	  void setTexture(const Texture& texture);
 	  void setScale(float x, float y);
 	  void setOrigin(float x, float y);
-	  void setCharacterType(CharacterType charType) { type = charType; }
-	  CharacterType getCharacterType() { return type; }
+	  void setShipType(ShipType shipType) { type = shipType; }
+	  ShipType getShipType() { return type; }
 protected:
-	CharacterType type;
-	Sprite charSpr;
+	ShipType type;
+	Sprite shipSpr;
 	bool isVisible;
 };

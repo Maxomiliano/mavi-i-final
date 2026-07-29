@@ -130,16 +130,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ClockTest.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="TpIntegrador.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Character.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="ClockTest.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="GameController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

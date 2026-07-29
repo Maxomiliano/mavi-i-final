@@ -1,6 +1,6 @@
 #pragma once
-#include "Enemy.h"
-#include "Character.h"
+#include "EnemyShip.h"
+#include "Ship.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
@@ -20,7 +20,7 @@ public:
 	void ProcessEvents();
 	void Update();
 	void Render();
-	void SpawnCharacters();
+	void SpawnShips();
 	void CheckCollisions();
 	void RenderMainMenu();
 	void RenderPlayScene();
@@ -33,7 +33,7 @@ private:
 	Mouse mouse;
 	RenderWindow window;
 	State state;
-	Enemy enemy;
+	EnemyShip enemy;
 	
 	Texture bgTex;
 	Sprite bgSpr;
