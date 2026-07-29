@@ -132,19 +132,15 @@
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="ClockTest.cpp" />
-    <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="Innocent.cpp" />
     <ClCompile Include="TpIntegrador.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="ClockTest.h" />
-    <ClInclude Include="Cross.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameController.h" />
-    <ClInclude Include="Innocent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

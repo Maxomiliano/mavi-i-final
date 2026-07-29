@@ -23,16 +23,6 @@ void Character::Spawn(Vector2f& position)
 	isVisible = true;
 }
 
-bool Character::IsClicked(Vector2f crossPosition)
-{
-	if (isVisible && charSpr.getGlobalBounds().contains(crossPosition))
-	{
-		isVisible = false;
-		return true;
-	}
-	return false;
-}
-
 void Character::Draw(RenderWindow& window)
 {
 	if (isVisible)

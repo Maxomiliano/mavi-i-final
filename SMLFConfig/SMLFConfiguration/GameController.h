@@ -1,7 +1,5 @@
 #pragma once
-#include "Cross.h"
 #include "Enemy.h"
-#include "Innocent.h"
 #include "Character.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -35,12 +33,8 @@ private:
 	Mouse mouse;
 	RenderWindow window;
 	State state;
-	Cross cross;
 	Enemy enemy;
-	Innocent innocent;
-	Texture crossTex;
-	Texture enemyTex;
-	Texture innocentTex;
+	
 	Texture bgTex;
 	Sprite bgSpr;
 	Font font;
@@ -55,16 +49,11 @@ private:
 		mainMenuTitle,
 		gameInstructions;
 
-	Character* spawnedChar = NULL;
-	vector<Vector2f> spawnPositions;
 	Vector2f spawn;
 	Vector2f lastPosition;
 
 	int enemiesDefeated;
 	int score;
 	int maxLives = 3;
-	int innocentsShooted;
-	float actionTime = 0.0f;
-	float actionDelay = 1.5f;
 };
 

@@ -10,7 +10,6 @@ int main()
 {
 	GameController gc;
 	gc.Play();
-	//ClockTest clockts;
 	
 	return 0;
 }

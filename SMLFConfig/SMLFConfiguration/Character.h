@@ -13,7 +13,6 @@ public: Character();
 	  };
 	  virtual ~Character();
 	  virtual void Spawn(Vector2f& position);
-	  virtual bool IsClicked(Vector2f crossPosition);
 	  virtual void Draw(RenderWindow& window);
 
 	  bool IsVisible() const;
