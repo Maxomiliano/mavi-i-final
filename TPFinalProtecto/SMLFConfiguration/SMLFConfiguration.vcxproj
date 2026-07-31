@@ -24,6 +24,7 @@
     <ProjectGuid>{ecd54712-32a1-4638-9f5a-366f58dd17a3}</ProjectGuid>
     <RootNamespace>SMLFConfiguration</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>TPFinal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
