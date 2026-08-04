@@ -135,7 +135,7 @@
     <ClCompile Include="ClockTest.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="TpIntegrador.cpp" />
+    <ClCompile Include="TPFinalMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ship.h" />
