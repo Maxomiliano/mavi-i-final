@@ -1,6 +1,7 @@
 #pragma once
 #include "EnemyShip.h"
 #include "Ship.h"
+#include "PlayerShip.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
@@ -33,9 +34,11 @@ private:
 	Mouse mouse;
 	RenderWindow window;
 	State state;
-	EnemyShip enemy;
+	PlayerShip player;
+	vector<EnemyShip*> enemies;
 	
 	Texture bgTex;
+	Texture playerTex;
 	Sprite bgSpr;
 	Font font;
 	Text playButton,

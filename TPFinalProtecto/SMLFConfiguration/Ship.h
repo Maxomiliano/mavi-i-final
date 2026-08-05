@@ -10,11 +10,12 @@ public: Ship();
 	  enum class ShipType
 	  {
 		  EnemyShip,
-		  Innocent
+		  PlayerShip
 	  };
 	  virtual ~Ship();
-	  virtual void Spawn(Vector2f& position);
+	  virtual void Spawn(const Vector2f& position);
 	  virtual void Draw(RenderWindow& window);
+	  virtual void Update(float deltaTime) = 0;
 
 	  bool IsVisible() const;
 	  void setTexture(const Texture& texture);
@@ -26,4 +27,5 @@ protected:
 	ShipType type;
 	Sprite shipSpr;
 	bool isVisible;
+	float speed;
 };

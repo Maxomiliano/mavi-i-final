@@ -12,11 +12,19 @@ GameController::GameController() :
 	window(VideoMode(1024, 900, 32), "TPIntegrador"), state(State::MainMenu), maxLives(3), score(0), enemiesDefeated(0)
 {
 	srand(time(NULL));
-	if (!font.loadFromFile("Cowboys.otf"))
+	if (!font.loadFromFile("Assets/Fonts/Cowboys.otf"))
 	{
 		cout << "Error loading font" << endl;
 	}
-	bgTex.loadFromFile("background.png");
+	if (!playerTex.loadFromFile("Assets/Images/spaceshipw.png"))
+	{
+		cout << "Error loading player ship texture" << endl;
+	}
+	player.setTexture(playerTex);
+	player.setOrigin(52.5f, 52.5f);
+	player.setScale(0.5f, 0.5f);
+	player.Spawn(Vector2f(1025.0f / 2.0f, 700.0f));
+	bgTex.loadFromFile("Assets/Images/spacebg.jpg");
 	bgSpr.setTexture(bgTex);
 }
 
@@ -83,7 +91,9 @@ GameController::GameController() :
 		if (state == State::Play)
 		{
 			float time = clock.restart().asSeconds();
-			SpawnShips();
+			//SpawnShips();
+			player.Update(time);
+			
 		}
 		/*
 		if ()
@@ -189,6 +199,8 @@ GameController::GameController() :
 		FloatRect scoreBounds = scoreHud.getLocalBounds();
 		scoreHud.setOrigin(scoreBounds.width / 2, scoreBounds.height / 2);
 		scoreHud.setPosition(850, 850);
+
+		player.Draw(window);
 
 		window.draw(nombreAlumno);
 		window.draw(livesHud);

@@ -9,6 +9,7 @@ using namespace sf;
 Ship::Ship()
 {
 	isVisible = true;
+	speed = 0.0;
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 }
 
@@ -17,7 +18,7 @@ Ship::~Ship()
 
 }
 
-void Ship::Spawn(Vector2f& position)
+void Ship::Spawn(const Vector2f& position)
 {
 	shipSpr.setPosition(position);
 	isVisible = true;
@@ -29,6 +30,11 @@ void Ship::Draw(RenderWindow& window)
 	{
 		window.draw(shipSpr);
 	}
+}
+
+void Ship::Update(float deltaTime)
+{
+
 }
 
 bool Ship::IsVisible() const

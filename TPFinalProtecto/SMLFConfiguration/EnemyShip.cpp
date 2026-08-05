@@ -14,6 +14,11 @@ void EnemyShip::Shoot()
 
 }
 
+void EnemyShip::Update(float deltaTime)
+{
+
+}
+
 
 void EnemyShip::setTexture(const Texture& texture) {
 	shipSpr.setTexture(texture);
