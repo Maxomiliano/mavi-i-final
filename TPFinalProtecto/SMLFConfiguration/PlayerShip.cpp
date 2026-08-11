@@ -27,9 +27,9 @@ void PlayerShip::Update(float deltaTime)
 	{
 		pos.x = boundsOffset;
 	}
-	else if (pos.x > 1025.0f - boundsOffset)
+	else if (pos.x > 768.0f - boundsOffset)
 	{
-		pos.x = 1025.0f - boundsOffset;
+		pos.x = 768.0f - boundsOffset;
 	}
 	shipSpr.setPosition(pos);
 }

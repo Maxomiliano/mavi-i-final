@@ -9,7 +9,7 @@ using namespace std;
 
 GameController::GameController() :
 
-	window(VideoMode(1024, 900, 32), "TPIntegrador"), state(State::MainMenu), maxLives(3), score(0), enemiesDefeated(0)
+	window(VideoMode(768, 1024, 32), "TPIntegrador"), state(State::MainMenu), maxLives(3), score(0), enemiesDefeated(0)
 {
 	srand(time(NULL));
 	if (!font.loadFromFile("Assets/Fonts/Cowboys.otf"))
@@ -23,7 +23,7 @@ GameController::GameController() :
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);
-	player.Spawn(Vector2f(1025.0f / 2.0f, 700.0f));
+	player.Spawn(Vector2f(768.0f / 2.0f, 920.0f));
 	bgTex.loadFromFile("Assets/Images/spacebg.jpg");
 	bgSpr.setTexture(bgTex);
 }
@@ -172,33 +172,35 @@ GameController::GameController() :
 	{
 		window.draw(bgSpr);
 
+		/*
 		nombreAlumno.setFont(font);
 		nombreAlumno.setCharacterSize(30);
 		nombreAlumno.setString("TP Integral. Garcia, Maximiliano.");
 		FloatRect nombreBounds = nombreAlumno.getLocalBounds();
 		nombreAlumno.setOrigin(nombreBounds.width / 2, nombreBounds.height / 2);
 		nombreAlumno.setPosition(1024 / 2, 750);
+		*/
 
 		livesHud.setFont(font);
 		livesHud.setCharacterSize(30);
 		livesHud.setString("Lives: " + to_string(maxLives));
 		FloatRect livesBounds = livesHud.getLocalBounds();
 		livesHud.setOrigin(livesBounds.width / 2, livesBounds.height / 2);
-		livesHud.setPosition(100, 800);
+		livesHud.setPosition(100, 40);
 
 		enemiesDefeatedHud.setFont(font);
 		enemiesDefeatedHud.setCharacterSize(30);
 		enemiesDefeatedHud.setString("Enemies killed: " + to_string(enemiesDefeated));
 		FloatRect enemiesBounds = enemiesDefeatedHud.getLocalBounds();
 		enemiesDefeatedHud.setOrigin(enemiesBounds.width / 2, enemiesBounds.height / 2);
-		enemiesDefeatedHud.setPosition(180, 850);
+		enemiesDefeatedHud.setPosition(768 / 2, 80);
 
 		scoreHud.setFont(font);
 		scoreHud.setCharacterSize(30);
 		scoreHud.setString("Score " + to_string(enemiesDefeated));
 		FloatRect scoreBounds = scoreHud.getLocalBounds();
 		scoreHud.setOrigin(scoreBounds.width / 2, scoreBounds.height / 2);
-		scoreHud.setPosition(850, 850);
+		scoreHud.setPosition(668, 40);
 
 		player.Draw(window);
 
