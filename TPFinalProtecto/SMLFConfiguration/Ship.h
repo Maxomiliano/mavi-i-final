@@ -22,6 +22,7 @@ public: Ship();
 	  void setScale(float x, float y);
 	  void setOrigin(float x, float y);
 	  void setShipType(ShipType shipType) { type = shipType; }
+	  Vector2f getPosition() const;
 	  ShipType getShipType() { return type; }
 protected:
 	ShipType type;

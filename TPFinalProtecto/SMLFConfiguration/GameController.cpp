@@ -20,6 +20,10 @@ GameController::GameController() :
 	{
 		cout << "Error loading player ship texture" << endl;
 	}
+	if (!playerProjTex.loadFromFile("Assets/Images/playershipprojectile.png"))
+	{
+		cout << "Error loading player projectile" << endl;
+	}
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);
@@ -64,13 +68,15 @@ GameController::GameController() :
 				}
 				break;
 			case State::Play:
-				if (evt.type == Event::MouseMoved)
+				if (evt.type == Event::KeyPressed)
 				{
+					if (evt.key.code == Keyboard::Space)
+					{
+						Vector2f spawnPos = player.getPosition();
+						spawnPos.y -= 40.0f;
 
-				}
-				else if (evt.type == Event::MouseButtonPressed)
-				{
-					
+						playerProjectiles.push_back(new PlayerProjectile(spawnPos, playerProjTex));
+					}
 				}
 				break;
 			case State::GameOver:
@@ -93,6 +99,18 @@ GameController::GameController() :
 			float time = clock.restart().asSeconds();
 			//SpawnShips();
 			player.Update(time);
+
+			for (int i = 0; i < playerProjectiles.size(); i++)
+			{
+				playerProjectiles[i]->Update(time);
+
+				if (playerProjectiles[i]->IsOutOfBounds())
+				{
+					delete playerProjectiles[i];
+					playerProjectiles.erase(playerProjectiles.begin() + i);
+					i--;
+				}
+			}
 			
 		}
 		/*
@@ -171,6 +189,11 @@ GameController::GameController() :
 	void GameController::RenderPlayScene()
 	{
 		window.draw(bgSpr);
+
+		for (auto proj : playerProjectiles)
+		{
+			proj->Draw(window);
+		}
 
 		/*
 		nombreAlumno.setFont(font);

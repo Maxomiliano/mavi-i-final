@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="TPFinalMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ship.h" />

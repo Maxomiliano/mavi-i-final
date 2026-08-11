@@ -2,6 +2,8 @@
 #include "EnemyShip.h"
 #include "Ship.h"
 #include "PlayerShip.h"
+//#include "Projectile.h"
+#include "PlayerProjectile.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
@@ -39,6 +41,9 @@ private:
 	
 	Texture bgTex;
 	Texture playerTex;
+	Texture playerProjTex;
+	vector<Projectile*> playerProjectiles;
+
 	Sprite bgSpr;
 	Font font;
 	Text playButton,

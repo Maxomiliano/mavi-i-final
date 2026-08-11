@@ -54,3 +54,8 @@ void Ship::setOrigin(float x, float y)
 {
 	shipSpr.setOrigin(x, y);
 }
+
+Vector2f Ship::getPosition() const
+{
+	return shipSpr.getPosition();
+}
