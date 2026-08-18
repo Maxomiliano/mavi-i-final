@@ -24,6 +24,7 @@ GameController::GameController() :
 	{
 		cout << "Error loading player projectile" << endl;
 	}
+	//if(!enemyTex.loadFromFile())
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);

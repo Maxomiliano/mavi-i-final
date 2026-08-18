@@ -13,5 +13,8 @@ private:
 	Texture enemyTex2;
 	Texture enemyTex3;
 	Sprite enemySpr;
+
+	float moveDirection;
+	float speed;
 };
 

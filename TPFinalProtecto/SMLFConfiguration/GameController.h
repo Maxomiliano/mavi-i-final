@@ -42,6 +42,9 @@ private:
 	Texture bgTex;
 	Texture playerTex;
 	Texture playerProjTex;
+	Texture enemyTex;
+	Texture enemyProjTex;
+	vector<Projectile*> enemyProjectiles;
 	vector<Projectile*> playerProjectiles;
 
 	Sprite bgSpr;
