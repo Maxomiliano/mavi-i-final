@@ -11,10 +11,12 @@ EnemyShip::EnemyShip() : Ship()
 	moveDirection = 1.0f;
 }
 
+/*
 void EnemyShip::Shoot()
 {
 
 }
+*/
 
 void EnemyShip::Update(float deltaTime)
 {
@@ -38,7 +40,8 @@ void EnemyShip::Update(float deltaTime)
 	shipSpr.setPosition(pos);
 }
 
-
+/*
 void EnemyShip::setTexture(const Texture& texture) {
 	shipSpr.setTexture(texture);
 }
+*/

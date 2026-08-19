@@ -4,10 +4,11 @@ class EnemyShip : public Ship
 {
 public:
 	EnemyShip();
-	void Shoot();
-	void setTexture(const sf::Texture& texture);
+	//void Shoot();
+	//void setTexture(const sf::Texture& texture);
+	void Update(float deltaTime) override;
+
 private:
-	void Update(float deltaTime) = 0;
 
 	Texture enemyTex;
 	Texture enemyTex2;

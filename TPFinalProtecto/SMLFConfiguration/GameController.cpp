@@ -24,7 +24,27 @@ GameController::GameController() :
 	{
 		cout << "Error loading player projectile" << endl;
 	}
-	//if(!enemyTex.loadFromFile())
+	if (!enemyTex.loadFromFile("Assets/Images/enemy3.png"))
+	{
+		cout << "Error loading enemy texture" << endl;
+	}
+	if (!enemyProjTex.loadFromFile("Assets/Images/enemyprojectile.png"))
+	{
+		cout << "Error loading enemy projectile" << endl;
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		EnemyShip* newEnemy = new EnemyShip();
+		newEnemy->setTexture(enemyTex);
+		newEnemy->setOrigin(52.5f, 52.5f);
+		//newEnemy->setScale(0.6f, 0.6f);
+
+		newEnemy->Spawn(Vector2f(100.0f + (i * 100.0f), 100.0f));
+
+		enemies.push_back(newEnemy);
+	}
+
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);
@@ -112,8 +132,13 @@ GameController::GameController() :
 					i--;
 				}
 			}
-			
+			for (auto enemy : enemies)
+			{
+				enemy->Update(time);
+			}
 		}
+
+		
 		/*
 		if ()
 		{
@@ -194,6 +219,11 @@ GameController::GameController() :
 		for (auto proj : playerProjectiles)
 		{
 			proj->Draw(window);
+		}
+
+		for (auto enemy : enemies)
+		{
+			enemy->Draw(window);
 		}
 
 		/*
