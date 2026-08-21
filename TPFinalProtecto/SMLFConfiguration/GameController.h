@@ -66,5 +66,8 @@ private:
 	int enemiesDefeated;
 	int score;
 	int maxLives = 3;
+
+	float enemyShootTimer = 0.0f;
+	float enemyShootInterval = 1.5f;
 };
 

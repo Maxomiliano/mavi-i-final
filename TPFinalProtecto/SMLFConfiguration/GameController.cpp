@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include "Ship.h"
 #include "EnemyShip.h"
+#include "EnemyProjectile.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -136,6 +137,28 @@ GameController::GameController() :
 			{
 				enemy->Update(time);
 			}
+
+			enemyShootTimer += time;
+
+			if (enemyShootTimer >= enemyShootInterval && !enemies.empty())
+			{
+				enemyShootTimer = 0.0f;
+				int randomIndex = rand() % enemies.size();
+				Vector2f spawnPos = enemies[randomIndex]->getPosition();
+				spawnPos.y += 40.0f;
+				enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
+			}
+
+			for (int i = 0; i < enemyProjectiles.size(); i++)
+			{
+				enemyProjectiles[i]->Update(time);
+				if (enemyProjectiles[i]->IsOutOfBounds())
+				{
+					delete enemyProjectiles[i];
+					enemyProjectiles.erase(enemyProjectiles.begin() + i);
+					i--;
+				}
+			}
 		}
 
 		
@@ -224,6 +247,11 @@ GameController::GameController() :
 		for (auto enemy : enemies)
 		{
 			enemy->Draw(window);
+		}
+
+		for (auto enemyProj : enemyProjectiles)
+		{
+			enemyProj->Draw(window);
 		}
 
 		/*
