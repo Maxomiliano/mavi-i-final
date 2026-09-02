@@ -59,3 +59,8 @@ Vector2f Ship::getPosition() const
 {
 	return shipSpr.getPosition();
 }
+
+FloatRect Ship::getBounds() const
+{
+	return shipSpr.getGlobalBounds();
+}

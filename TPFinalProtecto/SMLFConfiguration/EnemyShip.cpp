@@ -45,3 +45,8 @@ void EnemyShip::setTexture(const Texture& texture) {
 	shipSpr.setTexture(texture);
 }
 */
+
+void EnemyShip::setDirection(float dir)
+{
+	moveDirection = dir;
+}

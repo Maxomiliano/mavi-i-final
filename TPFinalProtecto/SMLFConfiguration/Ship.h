@@ -24,6 +24,8 @@ public: Ship();
 	  void setShipType(ShipType shipType) { type = shipType; }
 	  Vector2f getPosition() const;
 	  ShipType getShipType() { return type; }
+	  FloatRect getBounds() const;
+
 protected:
 	ShipType type;
 	Sprite shipSpr;

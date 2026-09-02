@@ -7,6 +7,7 @@ public:
 	//void Shoot();
 	//void setTexture(const sf::Texture& texture);
 	void Update(float deltaTime) override;
+	void setDirection(float dir);
 
 private:
 
