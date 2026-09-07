@@ -13,7 +13,7 @@ GameController::GameController() :
 	window(VideoMode(768, 1024, 32), "TPIntegrador"), state(State::MainMenu), maxLives(3), score(0), enemiesDefeated(0)
 {
 	srand(time(NULL));
-	if (!font.loadFromFile("Assets/Fonts/Cowboys.otf"))
+	if (!font.loadFromFile("Assets/Fonts/Audiowide.ttf"))
 	{
 		cout << "Error loading font" << endl;
 	}
@@ -242,7 +242,7 @@ void GameController::RenderPlayScene()
 	enemiesDefeatedHud.setString("Enemies killed: " + to_string(enemiesDefeated));
 	FloatRect enemiesBounds = enemiesDefeatedHud.getLocalBounds();
 	enemiesDefeatedHud.setOrigin(enemiesBounds.width / 2, enemiesBounds.height / 2);
-	enemiesDefeatedHud.setPosition(768 / 2, 80);
+	enemiesDefeatedHud.setPosition(768 / 2, 40);
 
 	scoreHud.setFont(font);
 	scoreHud.setCharacterSize(30);
