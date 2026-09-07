@@ -82,10 +82,14 @@ void GameController::ProcessEvents()
 			{
 				if (evt.key.code == Keyboard::Space)
 				{
-					Vector2f spawnPos = player.getPosition();
-					spawnPos.y -= 40.0f;
+					if (playerShootTimer >= playerShootCooldown)
+					{
+						Vector2f spawnPos = player.getPosition();
+						spawnPos.y -= 40.0f;
 
-					playerProjectiles.push_back(new PlayerProjectile(spawnPos, playerProjTex));
+						playerProjectiles.push_back(new PlayerProjectile(spawnPos, playerProjTex));
+						playerShootTimer = 0.0f;
+					}
 				}
 			}
 			break;
@@ -114,6 +118,8 @@ void GameController::Update()
 	if (state == State::Play)
 	{
 		float time = clock.restart().asSeconds();
+
+		playerShootTimer += time;
 
 		player.Update(time);
 
@@ -237,7 +243,7 @@ void GameController::RenderPlayScene()
 
 	scoreHud.setFont(font);
 	scoreHud.setCharacterSize(30);
-	scoreHud.setString("Score " + to_string(enemiesDefeated));
+	scoreHud.setString("Score " + to_string(score));
 	FloatRect scoreBounds = scoreHud.getLocalBounds();
 	scoreHud.setOrigin(scoreBounds.width / 2, scoreBounds.height / 2);
 	scoreHud.setPosition(668, 40);
@@ -407,6 +413,7 @@ void GameController::RestartGame()
 	maxLives = 3;
 	score = 0;
 	enemyShootTimer = 0.0f;
+	playerShootTimer = 0.0f;
 
 	for (auto proj : playerProjectiles)
 	{
