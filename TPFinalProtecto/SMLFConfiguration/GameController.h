@@ -63,6 +63,7 @@ private:
 		scoreHud,
 		nombreAlumno,
 		mainMenuTitle,
+		gameOverTitle,
 		gameInstructions;
 
 	Vector2f spawn;

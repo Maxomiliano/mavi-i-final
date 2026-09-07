@@ -132,7 +132,7 @@ void GameController::Update()
 		/*
 		if (enemies.empty())
 		{
-			state = State::GameOver;
+			state = State::Win;
 		}
 		*/
 
@@ -161,24 +161,24 @@ void GameController::Render()
 void GameController::RenderMainMenu()
 {
 	mainMenuTitle.setFont(font);
-	mainMenuTitle.setString("TPIntegrador");
+	mainMenuTitle.setString("TPFinal");
 	mainMenuTitle.setCharacterSize(60);
 	FloatRect titleBounds = mainMenuTitle.getGlobalBounds();
 	mainMenuTitle.setOrigin(titleBounds.width / 2, titleBounds.height / 2);
-	mainMenuTitle.setPosition(1024 / 2, 100);
+	mainMenuTitle.setPosition(768 / 2, 100);
 
 	gameInstructions.setFont(font);
 	gameInstructions.setString("Instrucciones:\n\n"
-		"- Se apunta y dispara con el puntero del raton.\n"
-		"- Cada disparo acertado al enemigo suma 1 punto.\n"
-		"- Cada disparo a un inocente resta 1 vida.\n"
-		"- Si el enemigo dispara resta 1 vida.\n"
-		"- Se gana matando 10 enemigos.\n"
-		"- Se pierde si gastamos 3 vidas.");
+		"- Te mueves con las teclas A y D o con las flechitas.\n"
+		"- Disparas con la barra espaciadora.\n"
+		"- Empiezas el juego con 3 vidas.\n"
+		"- Si el enemigo te pega, se resta 1 vida.\n"
+		"- El nivel se completa al destruir a todos los enemigos.\n"
+		"- El nivel se pierde si pierdes tus 3 vidas.");
 	gameInstructions.setCharacterSize(24);
 	FloatRect instructionsBounds = gameInstructions.getGlobalBounds();
 	gameInstructions.setOrigin(instructionsBounds.width / 2, instructionsBounds.height / 2);
-	gameInstructions.setPosition(1024 / 2, 400);
+	gameInstructions.setPosition(768 / 2, 400);
 
 
 	playButton.setFont(font);
@@ -186,7 +186,7 @@ void GameController::RenderMainMenu()
 	playButton.setCharacterSize(30);
 	FloatRect playBounds = playButton.getGlobalBounds();
 	playButton.setOrigin(playBounds.width / 2, playBounds.height / 2);
-	playButton.setPosition(1024 / 4, 700);
+	playButton.setPosition(768 / 4, 700);
 
 
 	exitButton.setFont(font);
@@ -194,7 +194,7 @@ void GameController::RenderMainMenu()
 	exitButton.setCharacterSize(30);
 	FloatRect exitBounds = exitButton.getGlobalBounds();
 	exitButton.setOrigin(exitBounds.width / 2, exitBounds.height / 2);
-	exitButton.setPosition(3 * 1024 / 4, 700);
+	exitButton.setPosition(3 * 768 / 4, 700);
 
 	window.draw(mainMenuTitle);
 	window.draw(gameInstructions);
@@ -220,15 +220,6 @@ void GameController::RenderPlayScene()
 	{
 		enemyProj->Draw(window);
 	}
-
-	/*
-	nombreAlumno.setFont(font);
-	nombreAlumno.setCharacterSize(30);
-	nombreAlumno.setString("TP Integral. Garcia, Maximiliano.");
-	FloatRect nombreBounds = nombreAlumno.getLocalBounds();
-	nombreAlumno.setOrigin(nombreBounds.width / 2, nombreBounds.height / 2);
-	nombreAlumno.setPosition(1024 / 2, 750);
-	*/
 
 	livesHud.setFont(font);
 	livesHud.setCharacterSize(30);
@@ -261,20 +252,28 @@ void GameController::RenderPlayScene()
 
 void GameController::RenderGameOver()
 {
+	gameOverTitle.setFont(font);
+	gameOverTitle.setString("GAME OVER");
+	gameOverTitle.setCharacterSize(60);
+	FloatRect titleBounds = gameOverTitle.getGlobalBounds();
+	gameOverTitle.setOrigin(titleBounds.width / 2, titleBounds.height / 2);
+	gameOverTitle.setPosition(768 / 2, 100);
+
 	resultText.setFont(font);
 	resultText.setCharacterSize(60);
 	FloatRect resulBounds = resultText.getGlobalBounds();
 	resultText.setOrigin(resulBounds.width / 2, resulBounds.height / 2);
-	resultText.setPosition(1024 / 2, 100);
+	resultText.setPosition(768 / 2, 100);
 
 	backToMenuButton.setFont(font);
 	backToMenuButton.setString("Back to Menu");
 	backToMenuButton.setCharacterSize(30);
 	FloatRect backToMenuBounds = backToMenuButton.getGlobalBounds();
 	backToMenuButton.setOrigin(backToMenuBounds.width / 2, backToMenuBounds.height / 2);
-	backToMenuButton.setPosition(1024 / 2, 700);
+	backToMenuButton.setPosition(768 / 2, 700);
 
 	window.draw(resultText);
+	window.draw(gameOverTitle);
 	window.draw(backToMenuButton);
 }
 
