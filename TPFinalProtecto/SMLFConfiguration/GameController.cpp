@@ -34,53 +34,6 @@ GameController::GameController() :
 		cout << "Error loading enemy projectile" << endl;
 	}
 
-	/*
-	for (int i = 0; i < 5; i++)
-	{
-		EnemyShip* newEnemy = new EnemyShip();
-		newEnemy->setTexture(enemyTex);
-		newEnemy->setOrigin(52.5f, 52.5f);
-		//newEnemy->setScale(0.6f, 0.6f);
-
-		newEnemy->Spawn(Vector2f(100.0f + (i * 100.0f), 100.0f));
-
-		enemies.push_back(newEnemy);
-	}
-	*/
-
-	// --- SISTEMA DE CARRILES (Formación Enemiga) ---
-	int filas = 3;             // Cantidad de carriles verticales
-	int enemigosPorFila = 5;   // Cuántas naves hay por carril
-
-	for (int fila = 0; fila < filas; fila++)
-	{
-		for (int col = 0; col < enemigosPorFila; col++)
-		{
-			EnemyShip* newEnemy = new EnemyShip();
-			newEnemy->setTexture(enemyTex);
-			newEnemy->setOrigin(52.5f, 52.5f); // Ajusta al centro de tu imagen
-			newEnemy->setScale(0.6f, 0.6f);
-
-			// Calculamos la posición Y dependiendo del carril (empieza en 100, y baja 90px por fila)
-			float posY = 100.0f + (fila * 90.0f);
-
-			// Calculamos la posición X separando las naves por 120px
-			float posX = 100.0f + (col * 120.0f);
-
-			newEnemy->Spawn(Vector2f(posX, posY));
-
-			// Magia de carriles: Si la fila es par (0, 2) van a la derecha. Si es impar (1), a la izquierda.
-			if (fila % 2 == 0) {
-				newEnemy->setDirection(1.0f);
-			}
-			else {
-				newEnemy->setDirection(-1.0f);
-			}
-
-			enemies.push_back(newEnemy);
-		}
-	}
-
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);
@@ -145,7 +98,14 @@ void GameController::ProcessEvents()
 				}
 			}
 			break;
+		case State::Win:
+			if (evt.type == Event::KeyPressed && evt.key.code == Keyboard::Enter)
+			{
+				//Alguna funcion de Reset
+				state = State::Win;
+			}
 		}
+
 	}
 }
 
@@ -154,91 +114,30 @@ void GameController::Update()
 	if (state == State::Play)
 	{
 		float time = clock.restart().asSeconds();
-		//SpawnShips();
+
 		player.Update(time);
 
-		for (int i = 0; i < playerProjectiles.size(); i++)
-		{
-			playerProjectiles[i]->Update(time);
-
-			if (playerProjectiles[i]->IsOutOfBounds())
-			{
-				delete playerProjectiles[i];
-				playerProjectiles.erase(playerProjectiles.begin() + i);
-				i--;
-			}
-		}
 		for (auto enemy : enemies)
 		{
 			enemy->Update(time);
 		}
 
-		enemyShootTimer += time;
-
-		if (enemyShootTimer >= enemyShootInterval && !enemies.empty())
-		{
-			enemyShootTimer = 0.0f;
-			int randomIndex = rand() % enemies.size();
-			Vector2f spawnPos = enemies[randomIndex]->getPosition();
-			spawnPos.y += 40.0f;
-			enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
-		}
-
 		//Proyectiles jugador
-		for (int i = 0; i < enemyProjectiles.size(); i++)
-		{
-			enemyProjectiles[i]->Update(time);
-			if (enemyProjectiles[i]->IsOutOfBounds())
-			{
-				delete enemyProjectiles[i];
-				enemyProjectiles.erase(enemyProjectiles.begin() + i);
-				i--;
-			}
-		}
-
-		for (int i = 0; i < playerProjectiles.size(); i++)
-		{
-			bool bulletDestroyed = false;
-
-			for (int j = 0; j < enemies.size(); j++)
-			{
-				if (playerProjectiles[i]->getBounds().intersects(enemies[j]->getBounds()))
-				{
-					score += 100;
-
-					delete enemies[j];
-					enemies.erase(enemies.begin() + j);
-
-					bulletDestroyed = true;
-					break;
-				}
-			}
-			if (bulletDestroyed)
-			{
-				delete playerProjectiles[i];
-				playerProjectiles.erase(playerProjectiles.begin() + i);
-				i--;
-			}
-		}
+		UpdatePlayerProjectiles(time);
 
 		//Proyectiles enemigos
-		for (int i = 0; i < enemyProjectiles.size(); i++)
+		UpdateEnemyProjectiles(time);
+
+		CheckCollisions();
+		/*
+		if (enemies.empty())
 		{
-			if (enemyProjectiles[i]->getBounds().intersects(player.getBounds()))
-			{
-				maxLives--;
-				// Acá se actualizaría el hud?
-
-				delete enemyProjectiles[i];
-				enemyProjectiles.erase(enemyProjectiles.begin() + i);
-				i--;
-
-				if (maxLives <= 0)
-				{
-					state = State::GameOver;
-				}
-			}
+			state = State::GameOver;
 		}
+		*/
+
+		scoreHud.setString("Score: " + to_string(score));
+		livesHud.setString("Lives: " + to_string(maxLives));
 	}
 }
 
@@ -253,6 +152,8 @@ void GameController::Render()
 		RenderPlayScene();
 	else if (state == State::GameOver)
 		RenderGameOver();
+	//else if (state == State::Win)
+		//RenderWinScene();
 
 	window.display();
 }
@@ -377,13 +278,127 @@ void GameController::RenderGameOver()
 	window.draw(backToMenuButton);
 }
 
-void GameController::SpawnShips()
+void GameController::RenderWinScene()
 {
 
 }
+
+void GameController::SpawnShips()
+{
+	int filas = 3;
+	int enemigosPorFila = 5;
+
+	for (int fila = 0; fila < filas; fila++)
+	{
+		for (int col = 0; col < enemigosPorFila; col++)
+		{
+			EnemyShip* newEnemy = new EnemyShip();
+			newEnemy->setTexture(enemyTex);
+			newEnemy->setOrigin(52.5f, 52.5f);
+			newEnemy->setScale(0.6f, 0.6f);
+
+			float posY = 100.0f + (fila * 90.0f);
+			float posX = 100.0f + (col * 120.0f);
+
+			newEnemy->Spawn(Vector2f(posX, posY));
+
+			if (fila % 2 == 0) {
+				newEnemy->setDirection(1.0f);
+			}
+			else {
+				newEnemy->setDirection(-1.0f);
+			}
+
+			enemies.push_back(newEnemy);
+		}
+	}
+}
 void GameController::CheckCollisions()
 {
+	//Colisiones de los proyectiles del jugador.
+	for (int i = 0; i < playerProjectiles.size(); i++)
+	{
+		bool bulletDestroyed = false;
 
+		for (int j = 0; j < enemies.size(); j++)
+		{
+			if (playerProjectiles[i]->getBounds().intersects(enemies[j]->getBounds()))
+			{
+				score += 100;
+
+				delete enemies[j];
+				enemies.erase(enemies.begin() + j);
+
+				bulletDestroyed = true;
+				break;
+			}
+		}
+		if (bulletDestroyed)
+		{
+			delete playerProjectiles[i];
+			playerProjectiles.erase(playerProjectiles.begin() + i);
+			i--;
+		}
+	}
+
+	//Colisiones de los proyectiles de los enemigos
+	for (int i = 0; i < enemyProjectiles.size(); i++)
+	{
+		if (enemyProjectiles[i]->getBounds().intersects(player.getBounds()))
+		{
+			maxLives--;
+			// Acá se actualizaría el hud?
+
+			delete enemyProjectiles[i];
+			enemyProjectiles.erase(enemyProjectiles.begin() + i);
+			i--;
+
+			if (maxLives <= 0)
+			{
+				state = State::GameOver;
+			}
+		}
+	}
+}
+
+void GameController::UpdatePlayerProjectiles(float deltaTime)
+{
+	for (int i = 0; i < playerProjectiles.size(); i++)
+	{
+		playerProjectiles[i]->Update(deltaTime);
+
+		if (playerProjectiles[i]->IsOutOfBounds())
+		{
+			delete playerProjectiles[i];
+			playerProjectiles.erase(playerProjectiles.begin() + i);
+			i--;
+		}
+	}
+}
+
+void GameController::UpdateEnemyProjectiles(float deltaTime)
+{
+	enemyShootTimer += deltaTime;
+
+	if (enemyShootTimer >= enemyShootInterval && !enemies.empty())
+	{
+		enemyShootTimer = 0.0f;
+		int randomIndex = rand() % enemies.size();
+		Vector2f spawnPos = enemies[randomIndex]->getPosition();
+		spawnPos.y += 40.0f;
+		enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
+	}
+
+	for (int i = 0; i < enemyProjectiles.size(); i++)
+	{
+		enemyProjectiles[i]->Update(deltaTime);
+		if (enemyProjectiles[i]->IsOutOfBounds())
+		{
+			delete enemyProjectiles[i];
+			enemyProjectiles.erase(enemyProjectiles.begin() + i);
+			i--;
+		}
+	}
 }
 
 
@@ -392,4 +407,26 @@ void GameController::RestartGame()
 	enemiesDefeated = 0;
 	maxLives = 3;
 	score = 0;
+	enemyShootTimer = 0.0f;
+
+	for (auto proj : playerProjectiles)
+	{
+		delete proj;
+	}
+	playerProjectiles.clear();
+
+	for (auto proj : enemyProjectiles)
+	{
+		delete proj;
+	}
+	enemyProjectiles.clear();
+
+	for (auto enemy : enemies) delete enemy;
+	{
+		enemies.clear();
+	}
+
+	SpawnShips();
+
+	player.Spawn(Vector2f(768.0f / 2.0f, 900.0f));
 }

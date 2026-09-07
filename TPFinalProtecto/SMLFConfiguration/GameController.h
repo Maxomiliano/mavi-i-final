@@ -12,7 +12,8 @@ enum class State
 {
 	MainMenu,
 	Play,
-	GameOver
+	GameOver,
+	Win
 };
 
 class GameController
@@ -23,14 +24,18 @@ public:
 	void ProcessEvents();
 	void Update();
 	void Render();
-	void SpawnShips();
-	void CheckCollisions();
 	void RenderMainMenu();
 	void RenderPlayScene();
 	void RenderGameOver();
+	void RenderWinScene();
 	void RestartGame();
 
 private:
+	void UpdatePlayerProjectiles(float deltaTime);
+	void UpdateEnemyProjectiles(float deltaTime);
+	void SpawnShips();
+	void CheckCollisions();
+
 	Clock clock;
 	Event evt;
 	Mouse mouse;
