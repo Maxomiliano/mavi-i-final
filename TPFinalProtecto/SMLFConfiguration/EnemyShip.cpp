@@ -9,6 +9,9 @@ EnemyShip::EnemyShip() : Ship()
 	setShipType(ShipType::EnemyShip);
 	speed = 150.0f;
 	moveDirection = 1.0f;
+	hitPoints = 1;
+	shootTimer = 0.0f;
+	shootCooldown = 2.0f;
 }
 
 /*
@@ -49,4 +52,25 @@ void EnemyShip::setTexture(const Texture& texture) {
 void EnemyShip::setDirection(float dir)
 {
 	moveDirection = dir;
+}
+
+void EnemyShip::TakeDamage(int damage)
+{
+	hitPoints -= damage;
+}
+
+bool EnemyShip::IsDead() const
+{
+	return hitPoints <= 0;
+}
+
+bool EnemyShip::CanShoot(float deltaTime)
+{
+	shootTimer += deltaTime;
+	if(shootTimer >= shootCooldown)
+	{
+		shootTimer = 0.0f;
+		return true;
+	}
+	return false;
 }

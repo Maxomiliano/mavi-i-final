@@ -1,6 +1,8 @@
 #include "GameController.h"
 #include "Ship.h"
 #include "EnemyShip.h"
+#include "TankEnemy.h"
+#include "FastEnemyShip.h"
 #include "EnemyProjectile.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -26,6 +28,14 @@ GameController::GameController() :
 		cout << "Error loading player projectile" << endl;
 	}
 	if (!enemyTex.loadFromFile("Assets/Images/enemy3.png"))
+	{
+		cout << "Error loading enemy texture" << endl;
+	}
+	if (!enemyTexTank.loadFromFile("Assets/Images/enemy1.png"))
+	{
+		cout << "Error loading enemy texture" << endl;
+	}
+	if (!enemyTexFast.loadFromFile("Assets/Images/enemy2.png"))
 	{
 		cout << "Error loading enemy texture" << endl;
 	}
@@ -297,7 +307,20 @@ void GameController::SpawnShips()
 	{
 		for (int col = 0; col < enemigosPorFila; col++)
 		{
-			EnemyShip* newEnemy = new EnemyShip();
+			EnemyShip* newEnemy = nullptr;
+
+			if (fila == 0)
+			{
+				newEnemy = new TankEnemy();
+			}
+			else if (fila == 1)
+			{
+				newEnemy = new EnemyShip();
+			}
+			else
+			{
+				newEnemy = new FastEnemyShip();
+			}
 			newEnemy->setTexture(enemyTex);
 			newEnemy->setOrigin(52.5f, 52.5f);
 			newEnemy->setScale(0.6f, 0.6f);
@@ -329,10 +352,20 @@ void GameController::CheckCollisions()
 		{
 			if (playerProjectiles[i]->getBounds().intersects(enemies[j]->getBounds()))
 			{
-				score += 100;
+				enemies[j]->TakeDamage(1);
 
-				delete enemies[j];
-				enemies.erase(enemies.begin() + j);
+				if (enemies[j]->IsDead())
+				{
+					score += 100;
+					delete enemies[j];
+					enemies.erase(enemies.begin() + j);
+				}
+
+				if (dynamic_cast<FastEnemyShip*>(enemies[j]) != nullptr)
+				{
+					// ¡Era la nave verde! Le damos al jugador súper velocidad de disparo.
+					playerShootCooldown = 0.15f;
+				}
 
 				bulletDestroyed = true;
 				break;
@@ -383,6 +416,16 @@ void GameController::UpdatePlayerProjectiles(float deltaTime)
 
 void GameController::UpdateEnemyProjectiles(float deltaTime)
 {
+	for (auto enemy : enemies)
+	{
+		if (enemy->CanShoot(deltaTime))
+		{
+			Vector2f spawnPos = enemy->getPosition();
+			spawnPos.y += 40.0f;
+			enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
+		}
+	}
+
 	enemyShootTimer += deltaTime;
 
 	if (enemyShootTimer >= enemyShootInterval && !enemies.empty())

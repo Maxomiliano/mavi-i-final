@@ -48,6 +48,8 @@ private:
 	Texture playerTex;
 	Texture playerProjTex;
 	Texture enemyTex;
+	Texture enemyTexTank;
+	Texture enemyTexFast;
 	Texture enemyProjTex;
 	vector<Projectile*> enemyProjectiles;
 	vector<Projectile*> playerProjectiles;

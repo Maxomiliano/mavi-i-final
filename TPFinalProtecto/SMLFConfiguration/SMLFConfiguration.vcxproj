@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnemyProjectile.cpp" />
+    <ClCompile Include="FastEnemyShip.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -139,10 +140,12 @@
     <ClCompile Include="ClockTest.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="TankEnemy.cpp" />
     <ClCompile Include="TPFinalMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyProjectile.h" />
+    <ClInclude Include="FastEnemyShip.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="Projectile.h" />
@@ -150,6 +153,7 @@
     <ClInclude Include="ClockTest.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="TankEnemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
