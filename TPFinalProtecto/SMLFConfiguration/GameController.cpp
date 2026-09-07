@@ -312,16 +312,19 @@ void GameController::SpawnShips()
 			if (fila == 0)
 			{
 				newEnemy = new TankEnemy();
+				newEnemy->setTexture(enemyTexTank);
 			}
 			else if (fila == 1)
 			{
 				newEnemy = new EnemyShip();
+				newEnemy->setTexture(enemyTex);
 			}
 			else
 			{
 				newEnemy = new FastEnemyShip();
+				newEnemy->setTexture(enemyTexFast);
 			}
-			newEnemy->setTexture(enemyTex);
+			//newEnemy->setTexture(enemyTex);
 			newEnemy->setOrigin(52.5f, 52.5f);
 			newEnemy->setScale(0.6f, 0.6f);
 
@@ -357,14 +360,14 @@ void GameController::CheckCollisions()
 				if (enemies[j]->IsDead())
 				{
 					score += 100;
+
+					if (dynamic_cast<FastEnemyShip*>(enemies[j]) != nullptr)
+					{
+						playerShootCooldown = 0.15f;
+					}
+
 					delete enemies[j];
 					enemies.erase(enemies.begin() + j);
-				}
-
-				if (dynamic_cast<FastEnemyShip*>(enemies[j]) != nullptr)
-				{
-					// ¡Era la nave verde! Le damos al jugador súper velocidad de disparo.
-					playerShootCooldown = 0.15f;
 				}
 
 				bulletDestroyed = true;
@@ -426,7 +429,9 @@ void GameController::UpdateEnemyProjectiles(float deltaTime)
 		}
 	}
 
+	/*
 	enemyShootTimer += deltaTime;
+	 
 
 	if (enemyShootTimer >= enemyShootInterval && !enemies.empty())
 	{
@@ -436,6 +441,7 @@ void GameController::UpdateEnemyProjectiles(float deltaTime)
 		spawnPos.y += 40.0f;
 		enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
 	}
+	*/
 
 	for (int i = 0; i < enemyProjectiles.size(); i++)
 	{
