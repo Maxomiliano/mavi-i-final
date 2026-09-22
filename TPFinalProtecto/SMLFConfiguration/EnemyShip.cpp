@@ -10,16 +10,9 @@ EnemyShip::EnemyShip() : Ship()
 	speed = 150.0f;
 	moveDirection = 1.0f;
 	hitPoints = 1;
-	shootTimer = 0.0f;
-	shootCooldown = 2.0f;
+	shootTimer = static_cast<float>(rand() % 200 / 100.0f);
+	shootCooldown = 1.5f;
 }
-
-/*
-void EnemyShip::Shoot()
-{
-
-}
-*/
 
 void EnemyShip::Update(float deltaTime)
 {
@@ -43,12 +36,6 @@ void EnemyShip::Update(float deltaTime)
 	shipSpr.setPosition(pos);
 }
 
-/*
-void EnemyShip::setTexture(const Texture& texture) {
-	shipSpr.setTexture(texture);
-}
-*/
-
 void EnemyShip::setDirection(float dir)
 {
 	moveDirection = dir;
@@ -69,7 +56,8 @@ bool EnemyShip::CanShoot(float deltaTime)
 	shootTimer += deltaTime;
 	if(shootTimer >= shootCooldown)
 	{
-		shootTimer = 0.0f;
+		//shootTimer = 0.0f;
+		shootTimer = -(static_cast<float>(rand() % 150) / 100.0f);
 		return true;
 	}
 	return false;

@@ -10,7 +10,7 @@ Ship::Ship()
 {
 	isVisible = true;
 	speed = 0.0;
-	std::srand(static_cast<unsigned int>(std::time(NULL)));
+	//std::srand(static_cast<unsigned int>(std::time(NULL)));
 }
 
 Ship::~Ship()

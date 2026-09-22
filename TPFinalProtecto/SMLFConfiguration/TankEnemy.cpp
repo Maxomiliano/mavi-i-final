@@ -4,5 +4,5 @@ TankEnemy::TankEnemy() : EnemyShip()
 {
 	speed = 80.0f;
 	hitPoints = 3;
-	shootCooldown = 3.0f;
+	shootCooldown = 2.0f;
 }
