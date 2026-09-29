@@ -145,12 +145,19 @@ void GameController::Update()
 		UpdateEnemyProjectiles(time);
 
 		CheckCollisions();
-		/*
+		
 		if (enemies.empty())
 		{
-			state = State::Win;
+			if (currentLevel >= 5)
+			{
+				state = State::Win;
+			}
+			else
+			{
+				currentLevel++;
+				state = State::LevelTransition;
+			}
 		}
-		*/
 
 		scoreHud.setString("Score: " + to_string(score));
 		livesHud.setString("Lives: " + to_string(maxLives));
@@ -445,6 +452,7 @@ void GameController::UpdateEnemyProjectiles(float deltaTime)
 
 void GameController::RestartGame()
 {
+	currentLevel = 1;
 	enemiesDefeated = 0;
 	maxLives = 3;
 	score = 0;

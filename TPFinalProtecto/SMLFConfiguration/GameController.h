@@ -13,7 +13,8 @@ enum class State
 	MainMenu,
 	Play,
 	GameOver,
-	Win
+	Win,
+	LevelTransition
 };
 
 class GameController
@@ -28,6 +29,7 @@ public:
 	void RenderPlayScene();
 	void RenderGameOver();
 	void RenderWinScene();
+	void RenderLevelTransition();
 	void RestartGame();
 
 private:
@@ -74,6 +76,7 @@ private:
 	int enemiesDefeated;
 	int score;
 	int maxLives = 3;
+	int currentLevel = 1;
 
 	float enemyShootTimer = 0.0f;
 	float enemyShootInterval = 1.5f;
