@@ -360,11 +360,12 @@ void GameController::CheckCollisions()
 				if (enemies[j]->IsDead())
 				{
 					score += 100;
-
+					/*
 					if (dynamic_cast<FastEnemyShip*>(enemies[j]) != nullptr)
 					{
 						playerShootCooldown = 0.15f;
 					}
+					*/
 
 					delete enemies[j];
 					enemies.erase(enemies.begin() + j);
@@ -428,20 +429,6 @@ void GameController::UpdateEnemyProjectiles(float deltaTime)
 			enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
 		}
 	}
-
-	/*
-	enemyShootTimer += deltaTime;
-	 
-
-	if (enemyShootTimer >= enemyShootInterval && !enemies.empty())
-	{
-		enemyShootTimer = 0.0f;
-		int randomIndex = rand() % enemies.size();
-		Vector2f spawnPos = enemies[randomIndex]->getPosition();
-		spawnPos.y += 40.0f;
-		enemyProjectiles.push_back(new EnemyProjectile(spawnPos, enemyProjTex));
-	}
-	*/
 
 	for (int i = 0; i < enemyProjectiles.size(); i++)
 	{

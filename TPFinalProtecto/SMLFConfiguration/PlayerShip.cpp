@@ -9,7 +9,6 @@ PlayerShip::PlayerShip() : Ship()
 
 void PlayerShip::Update(float deltaTime)
 {
-	//if (!IsVisible) return;
 	Vector2f pos = shipSpr.getPosition();
 
 	if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A))
