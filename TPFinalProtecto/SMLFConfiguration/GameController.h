@@ -2,9 +2,9 @@
 #include "EnemyShip.h"
 #include "Ship.h"
 #include "PlayerShip.h"
-//#include "Projectile.h"
 #include "PlayerProjectile.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 using namespace sf;
 using namespace std;
 
@@ -56,6 +56,14 @@ private:
 	vector<Projectile*> enemyProjectiles;
 	vector<Projectile*> playerProjectiles;
 
+	SoundBuffer shootBuffer;
+	SoundBuffer explosionBuffer;
+	SoundBuffer powerupBuffer;
+
+	Music transitionMusic;
+	Music gameOverMusic;
+	Music winMusic;
+
 	Sprite bgSpr;
 	Font font;
 	Text playButton,
@@ -81,6 +89,6 @@ private:
 	float enemyShootTimer = 0.0f;
 	float enemyShootInterval = 1.5f;
 	float playerShootTimer = 0.0f;
-	float playerShootCooldown = 0.9f;
+	float playerShootCooldown = 0.8f;
 };
 

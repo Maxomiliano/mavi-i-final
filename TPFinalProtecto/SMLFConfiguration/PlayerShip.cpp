@@ -4,7 +4,7 @@
 PlayerShip::PlayerShip() : Ship()
 {
 	setShipType(ShipType::PlayerShip);
-	speed = 400.0f;
+	speed = 300.0f;
 }
 
 void PlayerShip::Update(float deltaTime)
