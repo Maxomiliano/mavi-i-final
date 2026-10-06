@@ -60,6 +60,10 @@ private:
 	SoundBuffer explosionBuffer;
 	SoundBuffer powerupBuffer;
 
+	Sound shootSound;
+	Sound explosionSound;
+	Sound powerupSound;
+
 	Music transitionMusic;
 	Music gameOverMusic;
 	Music winMusic;

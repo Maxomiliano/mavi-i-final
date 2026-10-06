@@ -43,6 +43,10 @@ GameController::GameController() :
 	{
 		cout << "Error loading enemy projectile" << endl;
 	}
+	if (!shootBuffer.loadFromFile("Assets/Sounds/ShipProjectile.wav"))
+	{
+		cout << "Error loading ship projectile SFX" << endl;
+	}
 
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
@@ -50,6 +54,8 @@ GameController::GameController() :
 	player.Spawn(Vector2f(768.0f / 2.0f, 920.0f));
 	bgTex.loadFromFile("Assets/Images/spacebg.jpg");
 	bgSpr.setTexture(bgTex);
+
+	shootSound.setBuffer(shootBuffer);
 }
 
 void GameController::Play()
@@ -98,6 +104,7 @@ void GameController::ProcessEvents()
 						spawnPos.y -= 40.0f;
 
 						playerProjectiles.push_back(new PlayerProjectile(spawnPos, playerProjTex));
+						shootSound.play();
 						playerShootTimer = 0.0f;
 					}
 				}
