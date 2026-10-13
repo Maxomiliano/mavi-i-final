@@ -82,7 +82,9 @@ private:
 		nombreAlumno,
 		mainMenuTitle,
 		gameOverTitle,
-		gameInstructions;
+		gameInstructions,
+		winRetryButton,
+		winExitButton;
 
 	Vector2f spawn;
 	Vector2f lastPosition;
@@ -95,6 +97,6 @@ private:
 	float enemyShootTimer = 0.0f;
 	float enemyShootInterval = 1.5f;
 	float playerShootTimer = 0.0f;
-	float playerShootCooldown = 0.8f;
+	float playerShootCooldown = 0.1f;
 };
 

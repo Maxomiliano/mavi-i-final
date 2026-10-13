@@ -158,15 +158,24 @@ void GameController::ProcessEvents()
 				}
 				enemyProjectiles.clear();
 
+				transitionMusic.stop();
+
 				SpawnShips();
 				state = State::Play;
 			}
 			break;
 		case State::Win:
-			if (evt.type == Event::KeyPressed && evt.key.code == Keyboard::Enter)
+			if (evt.type == Event::MouseButtonPressed)
 			{
-				//Alguna funcion de Reset
-				state = State::Win;
+				if (winRetryButton.getGlobalBounds().contains(mousePos))
+				{
+					state = State::Play;
+					RestartGame();
+				}
+				else if (winExitButton.getGlobalBounds().contains(mousePos))
+				{
+					window.close();
+				}
 			}
 			break;
 		}
@@ -202,12 +211,14 @@ void GameController::ProcessEvents()
 				if (currentLevel >= 5)
 				{
 					state = State::Win;
+					winMusic.stop();
 					winMusic.play();
 				}
 				else
 				{
 					currentLevel++;
 					state = State::LevelTransition;
+					transitionMusic.stop();
 					transitionMusic.play();
 				}
 			}
@@ -230,6 +241,8 @@ void GameController::ProcessEvents()
 			RenderGameOver();
 		else if (state == State::LevelTransition)
 			RenderLevelTransition();
+		else if (state == State::Win)
+			RenderWinScene();
 
 		window.display();
 	}
@@ -355,7 +368,23 @@ void GameController::ProcessEvents()
 
 	void GameController::RenderWinScene()
 	{
+		winRetryButton.setFont(font);
+		winRetryButton.setString("Retry");
+		winRetryButton.setCharacterSize(30);
+		FloatRect winRetryBounds = winRetryButton.getGlobalBounds();
+		winRetryButton.setOrigin(winRetryBounds.width / 2, winRetryBounds.height / 2);
+		winRetryButton.setPosition(768 / 4, 700);
 
+		winExitButton.setFont(font);
+		winExitButton.setString("Exit");
+		winExitButton.setCharacterSize(30);
+		FloatRect winExitBounds = winExitButton.getGlobalBounds();
+		winExitButton.setOrigin(winExitBounds.width / 2, winExitBounds.height / 2);
+		winExitButton.setPosition(3 * 768 / 4, 700);
+
+		window.draw(resultText);
+		window.draw(winRetryButton);
+		window.draw(winExitButton);
 	}
 
 	void GameController::RenderLevelTransition()
@@ -505,6 +534,7 @@ void GameController::ProcessEvents()
 				if (maxLives <= 0)
 				{
 					state = State::GameOver;
+					gameOverMusic.stop();
 					gameOverMusic.play();
 				}
 			}
