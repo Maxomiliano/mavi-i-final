@@ -12,7 +12,7 @@ using namespace std;
 
 GameController::GameController() :
 
-	window(VideoMode(768, 1024, 32), "TPIntegrador"), state(State::MainMenu), maxLives(3), score(0), enemiesDefeated(0)
+	window(VideoMode(768, 1024, 32), "TPIntegrador"), state(State::MainMenu), maxLives(93), score(0), enemiesDefeated(0)
 {
 	srand(time(NULL));
 	if (!font.loadFromFile("Assets/Fonts/Audiowide.ttf"))
@@ -47,15 +47,39 @@ GameController::GameController() :
 	{
 		cout << "Error loading ship projectile SFX" << endl;
 	}
+	if (!explosionBuffer.loadFromFile("Assets/Sounds/boom2.wav"))
+	{
+		cout << "Error loading explosion SFX";
+	}
+	if (!shipHitBuffer.loadFromFile("Assets/Sounds/boom3.wav"))
+	{
+		cout << "Error loading ship hit SFX";
+	}
+
+	if (!transitionMusic.openFromFile("Assets/Sounds/roundend.wav"))
+	{
+		cout << "Error loading transition music";
+	}
+	if (!gameOverMusic.openFromFile("Assets/Sounds/gameover.ogg"))
+	{
+		cout << "Error loading gameover music";
+	}
+	if (!winMusic.openFromFile("Assets/Sounds/win.ogg"))
+	{
+		cout << "Error loading win music";
+	}
 
 	player.setTexture(playerTex);
 	player.setOrigin(52.5f, 52.5f);
 	player.setScale(0.5f, 0.5f);
 	player.Spawn(Vector2f(768.0f / 2.0f, 920.0f));
+
 	bgTex.loadFromFile("Assets/Images/spacebg.jpg");
 	bgSpr.setTexture(bgTex);
 
 	shootSound.setBuffer(shootBuffer);
+	explosionSound.setBuffer(explosionBuffer);
+	shipHitSound.setBuffer(shipHitBuffer);
 }
 
 void GameController::Play()
@@ -178,11 +202,13 @@ void GameController::ProcessEvents()
 				if (currentLevel >= 5)
 				{
 					state = State::Win;
+					winMusic.play();
 				}
 				else
 				{
 					currentLevel++;
 					state = State::LevelTransition;
+					transitionMusic.play();
 				}
 			}
 
@@ -446,12 +472,7 @@ void GameController::ProcessEvents()
 					if (enemies[j]->IsDead())
 					{
 						score += 100;
-						/*
-						if (dynamic_cast<FastEnemyShip*>(enemies[j]) != nullptr)
-						{
-							playerShootCooldown = 0.15f;
-						}
-						*/
+						explosionSound.play();
 
 						delete enemies[j];
 						enemies.erase(enemies.begin() + j);
@@ -475,7 +496,7 @@ void GameController::ProcessEvents()
 			if (enemyProjectiles[i]->getBounds().intersects(player.getBounds()))
 			{
 				maxLives--;
-				// Acá se actualizaría el hud?
+				shipHitSound.play();
 
 				delete enemyProjectiles[i];
 				enemyProjectiles.erase(enemyProjectiles.begin() + i);
@@ -484,6 +505,7 @@ void GameController::ProcessEvents()
 				if (maxLives <= 0)
 				{
 					state = State::GameOver;
+					gameOverMusic.play();
 				}
 			}
 		}
@@ -533,7 +555,7 @@ void GameController::ProcessEvents()
 	{
 		currentLevel = 1;
 		enemiesDefeated = 0;
-		maxLives = 3;
+		maxLives = 93;
 		score = 0;
 		enemyShootTimer = 0.0f;
 		playerShootTimer = 0.0f;

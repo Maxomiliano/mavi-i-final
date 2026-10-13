@@ -59,10 +59,12 @@ private:
 	SoundBuffer shootBuffer;
 	SoundBuffer explosionBuffer;
 	SoundBuffer powerupBuffer;
+	SoundBuffer shipHitBuffer;
 
 	Sound shootSound;
 	Sound explosionSound;
 	Sound powerupSound;
+	Sound shipHitSound;
 
 	Music transitionMusic;
 	Music gameOverMusic;
@@ -87,7 +89,7 @@ private:
 
 	int enemiesDefeated;
 	int score;
-	int maxLives = 3;
+	int maxLives = 93;
 	int currentLevel = 1;
 
 	float enemyShootTimer = 0.0f;
