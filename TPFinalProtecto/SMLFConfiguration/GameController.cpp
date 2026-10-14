@@ -217,6 +217,7 @@ void GameController::ProcessEvents()
 				else
 				{
 					currentLevel++;
+					maxLives++;
 					state = State::LevelTransition;
 					transitionMusic.stop();
 					transitionMusic.play();
@@ -348,12 +349,6 @@ void GameController::ProcessEvents()
 		gameOverTitle.setOrigin(titleBounds.width / 2, titleBounds.height / 2);
 		gameOverTitle.setPosition(768 / 2, 100);
 
-		resultText.setFont(font);
-		resultText.setCharacterSize(60);
-		FloatRect resulBounds = resultText.getGlobalBounds();
-		resultText.setOrigin(resulBounds.width / 2, resulBounds.height / 2);
-		resultText.setPosition(768 / 2, 100);
-
 		backToMenuButton.setFont(font);
 		backToMenuButton.setString("Back to Menu");
 		backToMenuButton.setCharacterSize(30);
@@ -361,13 +356,19 @@ void GameController::ProcessEvents()
 		backToMenuButton.setOrigin(backToMenuBounds.width / 2, backToMenuBounds.height / 2);
 		backToMenuButton.setPosition(768 / 2, 700);
 
-		window.draw(resultText);
 		window.draw(gameOverTitle);
 		window.draw(backToMenuButton);
 	}
 
 	void GameController::RenderWinScene()
 	{
+		resultText.setFont(font);
+		resultText.setString("You have Won!");
+		resultText.setCharacterSize(60);
+		FloatRect resultBounds = resultText.getGlobalBounds();
+		resultText.setOrigin(resultBounds.width / 2, resultBounds.height / 2);
+		resultText.setPosition(768 / 2, 300);
+
 		winRetryButton.setFont(font);
 		winRetryButton.setString("Retry");
 		winRetryButton.setCharacterSize(30);
@@ -590,6 +591,10 @@ void GameController::ProcessEvents()
 		enemyShootTimer = 0.0f;
 		playerShootTimer = 0.0f;
 
+		transitionMusic.stop();
+		gameOverMusic.stop();
+		winMusic.stop();
+
 		for (auto proj : playerProjectiles)
 		{
 			delete proj;
@@ -610,4 +615,9 @@ void GameController::ProcessEvents()
 		SpawnShips();
 
 		player.Spawn(Vector2f(768.0f / 2.0f, 900.0f));
+	}
+
+	GameController::~GameController()
+	{
+
 	}

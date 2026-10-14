@@ -21,6 +21,7 @@ class GameController
 {
 public:
 	GameController();
+	~GameController();
 	void Play();
 	void ProcessEvents();
 	void Update();
