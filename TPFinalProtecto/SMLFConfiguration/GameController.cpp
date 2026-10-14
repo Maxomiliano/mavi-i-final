@@ -3,6 +3,7 @@
 #include "EnemyShip.h"
 #include "TankEnemy.h"
 #include "FastEnemyShip.h"
+#include "PowerUpShip.h"
 #include "EnemyProjectile.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -188,6 +189,16 @@ void GameController::ProcessEvents()
 		if (state == State::Play)
 		{
 			float time = clock.restart().asSeconds();
+
+			if (isPowerUpActive)
+			{
+				powerUpTimer += time;
+				if (powerUpTimer >= 3.0f)
+				{
+					isPowerUpActive = false;
+					playerShootCooldown = 0.5f;
+				}
+			}
 
 			playerShootTimer += time;
 
@@ -436,13 +447,21 @@ void GameController::ProcessEvents()
 			enemigosPorFila = 7;
 		}
 
+		int powerupFila = rand() % filas;
+		int powerupCol = rand() % enemigosPorFila;
+
 		for (int fila = 0; fila < filas; fila++)
 		{
 			for (int col = 0; col < enemigosPorFila; col++)
 			{
 				EnemyShip* newEnemy = nullptr;
 
-				if (currentLevel == 1)
+				if (fila == powerupFila && col == powerupCol)
+				{
+					newEnemy = new PowerUpShip();
+					newEnemy->setTexture(enemyTexFast);
+				}
+				else if (currentLevel == 1)
 				{
 					newEnemy = new EnemyShip();
 					newEnemy->setTexture(enemyTex);
@@ -486,6 +505,7 @@ void GameController::ProcessEvents()
 			}
 		}
 	}
+
 	void GameController::CheckCollisions()
 	{
 		//Colisiones de los proyectiles del jugador.
@@ -503,6 +523,14 @@ void GameController::ProcessEvents()
 					{
 						score += 100;
 						explosionSound.play();
+
+						if (enemies[j]->getShipType() == Ship::ShipType::PowerUpShip)
+						{
+							isPowerUpActive = true;
+							powerUpTimer = 0.0f;
+							playerShootCooldown = 0.15f;
+							//powerUpSound.play();
+						}
 
 						delete enemies[j];
 						enemies.erase(enemies.begin() + j);
@@ -590,6 +618,10 @@ void GameController::ProcessEvents()
 		score = 0;
 		enemyShootTimer = 0.0f;
 		playerShootTimer = 0.0f;
+
+		isPowerUpActive = false;
+		powerUpTimer = 0.0f;
+		playerShootCooldown = 0.5f;
 
 		transitionMusic.stop();
 		gameOverMusic.stop();

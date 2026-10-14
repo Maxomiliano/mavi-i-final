@@ -98,6 +98,9 @@ private:
 	float enemyShootTimer = 0.0f;
 	float enemyShootInterval = 1.5f;
 	float playerShootTimer = 0.0f;
-	float playerShootCooldown = 0.1f;
+	float playerShootCooldown = 0.5f;
+
+	bool isPowerUpActive = false;
+	float powerUpTimer = 0.0f;
 };
 

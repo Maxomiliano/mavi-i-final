@@ -10,7 +10,8 @@ public: Ship();
 	  enum class ShipType
 	  {
 		  EnemyShip,
-		  PlayerShip
+		  PlayerShip,
+		  PowerUpShip
 	  };
 	  virtual ~Ship();
 	  virtual void Spawn(const Vector2f& position);

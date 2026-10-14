@@ -135,6 +135,7 @@
     <ClCompile Include="FastEnemyShip.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
+    <ClCompile Include="PowerUpShip.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ClockTest.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="FastEnemyShip.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerShip.h" />
+    <ClInclude Include="PowerUpShip.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ClockTest.h" />
