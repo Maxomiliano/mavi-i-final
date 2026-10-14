@@ -75,7 +75,7 @@ private:
 	Font font;
 	Text playButton,
 		exitButton,
-		resultText,
+		levelText,
 		backToMenuButton,
 		livesHud,
 		enemiesDefeatedHud,

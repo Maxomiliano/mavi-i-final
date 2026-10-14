@@ -362,12 +362,12 @@ void GameController::ProcessEvents()
 
 	void GameController::RenderWinScene()
 	{
-		resultText.setFont(font);
-		resultText.setString("You have Won!");
-		resultText.setCharacterSize(60);
-		FloatRect resultBounds = resultText.getGlobalBounds();
-		resultText.setOrigin(resultBounds.width / 2, resultBounds.height / 2);
-		resultText.setPosition(768 / 2, 300);
+		levelText.setFont(font);
+		levelText.setString("You have Won!");
+		levelText.setCharacterSize(60);
+		FloatRect resultBounds = levelText.getGlobalBounds();
+		levelText.setOrigin(resultBounds.width / 2, resultBounds.height / 2);
+		levelText.setPosition(768 / 2, 300);
 
 		winRetryButton.setFont(font);
 		winRetryButton.setString("Retry");
@@ -383,19 +383,19 @@ void GameController::ProcessEvents()
 		winExitButton.setOrigin(winExitBounds.width / 2, winExitBounds.height / 2);
 		winExitButton.setPosition(3 * 768 / 4, 700);
 
-		window.draw(resultText);
+		window.draw(levelText);
 		window.draw(winRetryButton);
 		window.draw(winExitButton);
 	}
 
 	void GameController::RenderLevelTransition()
 	{
-		resultText.setFont(font);
-		resultText.setString("Nivel " + to_string(currentLevel));
-		resultText.setCharacterSize(60);
-		FloatRect resultBounds = resultText.getGlobalBounds();
-		resultText.setOrigin(resultBounds.width / 2, resultBounds.height / 2);
-		resultText.setPosition(768 / 2, 300);
+		levelText.setFont(font);
+		levelText.setString("Nivel " + to_string(currentLevel));
+		levelText.setCharacterSize(60);
+		FloatRect resultBounds = levelText.getGlobalBounds();
+		levelText.setOrigin(resultBounds.width / 2, resultBounds.height / 2);
+		levelText.setPosition(768 / 2, 300);
 
 		backToMenuButton.setFont(font);
 		backToMenuButton.setString("Presiona ENTER para continuar");
@@ -404,7 +404,7 @@ void GameController::ProcessEvents()
 		backToMenuButton.setOrigin(backToMenuBounds.width / 2, backToMenuBounds.height / 2);
 		backToMenuButton.setPosition(768 / 2, 700);
 
-		window.draw(resultText);
+		window.draw(levelText);
 		window.draw(backToMenuButton);
 	}
 
