@@ -44,6 +44,10 @@ GameController::GameController() :
 	{
 		cout << "Error loading enemy projectile" << endl;
 	}
+	if (!enemyPowTex.loadFromFile("Assets/Images/enemy4.png"))
+	{
+		cout << "Error loading power up enemy texture";
+	}
 	if (!shootBuffer.loadFromFile("Assets/Sounds/ShipProjectile.wav"))
 	{
 		cout << "Error loading ship projectile SFX" << endl;
@@ -55,6 +59,10 @@ GameController::GameController() :
 	if (!shipHitBuffer.loadFromFile("Assets/Sounds/boom3.wav"))
 	{
 		cout << "Error loading ship hit SFX";
+	}
+	if (!powerupBuffer.loadFromFile("Assets/Sounds/powerup.ogg"))
+	{
+		cout << "Error loading power up sound";
 	}
 
 	if (!transitionMusic.openFromFile("Assets/Sounds/roundend.wav"))
@@ -81,6 +89,7 @@ GameController::GameController() :
 	shootSound.setBuffer(shootBuffer);
 	explosionSound.setBuffer(explosionBuffer);
 	shipHitSound.setBuffer(shipHitBuffer);
+	powerUpSound.setBuffer(powerupBuffer);
 }
 
 void GameController::Play()
@@ -459,7 +468,7 @@ void GameController::ProcessEvents()
 				if (fila == powerupFila && col == powerupCol)
 				{
 					newEnemy = new PowerUpShip();
-					newEnemy->setTexture(enemyTexFast);
+					newEnemy->setTexture(enemyPowTex);
 				}
 				else if (currentLevel == 1)
 				{
@@ -529,7 +538,7 @@ void GameController::ProcessEvents()
 							isPowerUpActive = true;
 							powerUpTimer = 0.0f;
 							playerShootCooldown = 0.15f;
-							//powerUpSound.play();
+							powerUpSound.play();
 						}
 
 						delete enemies[j];

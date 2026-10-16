@@ -54,6 +54,7 @@ private:
 	Texture enemyTexTank;
 	Texture enemyTexFast;
 	Texture enemyProjTex;
+	Texture enemyPowTex;
 	vector<Projectile*> enemyProjectiles;
 	vector<Projectile*> playerProjectiles;
 
@@ -61,11 +62,13 @@ private:
 	SoundBuffer explosionBuffer;
 	SoundBuffer powerupBuffer;
 	SoundBuffer shipHitBuffer;
+	SoundBuffer powerUpBuffer;
 
 	Sound shootSound;
 	Sound explosionSound;
 	Sound powerupSound;
 	Sound shipHitSound;
+	Sound powerUpSound;
 
 	Music transitionMusic;
 	Music gameOverMusic;
